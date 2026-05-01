@@ -11,5 +11,7 @@ jobs:
     second-job:
         runs-on: ubuntu-latest
         steps:
+            - name: failing step
+              run: exit 1
             - name: say goodbye
               run: echo "Goodbye World"
