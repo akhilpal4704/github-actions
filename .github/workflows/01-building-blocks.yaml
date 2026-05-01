@@ -1,17 +1,17 @@
-name: 01-building-blocks
+name: 01-building-blocks                     # Name of the workflow
 
-on: push
+on: push                                     # Trigger the workflow on push events
 
-jobs:
+jobs:                                        # Define the jobs to be run in the workflow                              
     first-job:
-        runs-on: ubuntu-latest
+        runs-on: ubuntu-latest               # Specify the agent to run the job on. This is default agent provided by GitHub Actions.
         steps:
-            - name: say hello
-              run: echo "Hello World"
+            - name: say hello                # Name of the step
+              run: echo "Hello World"        # Command to be executed in the step. This will print "Hello World" in the logs of the workflow run.
     second-job:
         runs-on: ubuntu-latest
         steps:
             - name: successful step
-              run: exit 0
+              run: exit 0                     # This step will exit with a status code of 0, indicating success. The workflow will continue to the next step.
             - name: say goodbye
               run: echo "Goodbye World"
