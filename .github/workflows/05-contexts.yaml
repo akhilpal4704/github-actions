@@ -1,0 +1,18 @@
+name: 05-contexts
+
+on: workflow_dispatch
+
+jobs:
+    context-job:
+        runs-on: ubuntu-latest
+        steps:
+            - name: print github context
+              run: |
+                echo "GITHUB_EVENT_NAME:${{github.event_name}}"
+                echo "GITHUB_WORKFLOW: ${{github.workflow}}"
+                echo "GITHUB_REF: ${{github.ref}}"
+                echo "GITHUB_SHA: ${{github.sha}}"
+                echo "GITHUB_ACTOR: ${{github.actor}}"
+            - name: print vars
+              run: |
+                echo "MY_VAR: ${{vars.MY_VAR}}"
