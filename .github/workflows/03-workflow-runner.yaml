@@ -1,0 +1,20 @@
+name: 03-workflow-runner
+
+on: workflow_dispatch
+
+jobs:
+    first-job:
+        runs-on: ubuntu-latest
+        steps:
+            - name: show the runner environment
+              run: |
+                echo "this will show runner OS"
+                echo "The runner environment is:${{ runner.os }}"
+
+    second-job:
+        runs-on: windows-latest
+        steps:
+            - name: show the runner environment
+              run: |
+                echo "this will show runner OS"
+                echo "The runner environment is:${{ runner.os }}"
