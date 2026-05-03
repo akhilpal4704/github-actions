@@ -1,0 +1,32 @@
+name: 11-caching
+
+on:
+    workflow_dispatch:
+        inputs:
+            use-cache:
+                type: boolean
+                description: Whether to use caching or not'
+                default: true
+
+jobs:
+    caching:
+        runs-on: ubuntu-latest
+        defaults:
+            run:
+             working-directory: 11-caching/react-app
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v4
+            - name: setup node
+              uses: actions/setup-node@v3
+              with:
+                    node-version: '24.x'
+            - name: install dependencies
+              run: npm ci
+            - name: run tests
+              run: npm run test
+            - name: build app
+              run: npm run build
+            - name: deploy app
+              run: echo "Deploying app..."
+                
