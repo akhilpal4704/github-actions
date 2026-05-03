@@ -1,0 +1,26 @@
+name : 07-functions
+
+on: workflow_dispatch
+
+jobs:
+    function-job:
+        runs-on: ubuntu-latest
+        steps:
+            - name: failure step
+              run: exit 1
+            - name: I will not run if the previous step fails
+              if: ${{success()}}
+              run: echo "I will run if success() is true"
+            - name: i will run if previous step s
+              if: ${{failure()}}
+              run: echo "I will run if failure() is true"
+            - name: I will always run
+              if: ${{always()}}
+              run: echo "I will always run"
+            - name: I will run if the previous step was not cancelled
+              if: ${{!cancelled()}}
+              run: echo "I will always run if the previous step was not cancelled"
+            - name: I will run if the previous step was cancelled
+              if: ${{cancelled()}}
+              run: echo "I will run if cancelled() is true"
+           
