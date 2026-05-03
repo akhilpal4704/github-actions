@@ -1,6 +1,13 @@
 name: 02-workflow-events 
 
-on : push
+on :
+    push:
+        branches: [ main ]         # Trigger the workflow on push events to the main branch
+    workflow_dispatch:             # Trigger the workflow manually
+    pull_request:                 # Trigger the workflow on pull request events
+        branches: [ main ]         # Trigger the workflow on pull request events targeting the main branch
+    schedule:                     # Trigger the workflow on a schedule
+        - cron: '*/5 * * * *' # Trigger the workflow every 5 minutes (UTC)
 
 jobs:
     first-job:
