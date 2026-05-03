@@ -1,0 +1,43 @@
+name: 09-inputs
+
+on:
+    workflow_dispatch:
+        inputs:
+            name:
+                description: 'Your name'
+                required: true
+            dry-run:
+                description: 'only dry run the workflow, do not deploy'
+                type: boolean
+                default: false
+            target-environment:
+                type: environment
+                description: 'Target environment to deploy'
+                required: true
+            tags:
+                type: choice
+                description: 'Choose the tags to build'
+                required: true
+                options:
+                    - latest
+                    - stable
+                    - v1.0
+
+jobs:
+    build:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Build step
+              run: |
+                echo "building the project for ${{ inputs.tags}}"
+
+    deploy:
+        runs-on: ubuntu-latest
+        if: ${{ !inputs.dry-run }}
+        environment: ${{ inputs.target-environment }}
+        needs: build
+        steps:
+            - name: Deploy step
+              run: |
+                echo "Deploying to ${{ inputs.target-environment }} environment with tag ${{ inputs.tags}}"
+                
