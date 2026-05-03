@@ -7,11 +7,11 @@ jobs:
         runs-on: ubuntu-latest
         steps:
             - name: failure step
-              run: exit 1
+              run: exit 0
             - name: I will not run if the previous step fails
               if: ${{success()}}
               run: echo "I will run if success() is true"
-            - name: i will run if previous step s
+            - name: I will run if the previous step failed
               if: ${{failure()}}
               run: echo "I will run if failure() is true"
             - name: I will always run
