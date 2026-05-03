@@ -7,6 +7,14 @@ on:
                 type: boolean
                 description: Whether to use caching or not'
                 default: true
+            node-version:
+                type: choice
+                description: 'Node.js version to use'
+                options:
+                    - '24.x'
+                    - '18.x'
+                    - '16.x'
+                default: '24.x'
 
 jobs:
     caching:
@@ -20,7 +28,7 @@ jobs:
             - name: setup node
               uses: actions/setup-node@v3
               with:
-                    node-version: '24.x'
+                    node-version: ${{ inputs.node-version }}
             - name: install dependencies
               run: npm ci
             - name: run tests
