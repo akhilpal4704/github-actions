@@ -1,0 +1,31 @@
+name: 10-outputs
+
+on:
+    workflow_dispatch:
+        inputs:
+            status:
+                type: choice
+                description: 'Choose the build status to set as output'   
+                required: true
+                options:
+                    - success
+                    - failure
+                default: success
+
+jobs:
+    build:
+        runs-on: ubuntu-latest
+        outputs:
+            build-status: ${{ steps.build01.outputs.status }}   # define the output variable and assign the value from the step output
+        steps:
+            - name: build step
+              id: build01                           # step id to reference the step output in the job output
+              run: echo "status=${{ inputs.status }}" >> "$GITHUB_OUTPUT"  # set the step output variable by writing to GITHUB_OUTPUT file
+    
+    deploy:
+        runs-on: ubuntu-latest  
+        needs: build
+        if: ${{ needs.build.outputs.build-status == 'success' }}   # reference the job output variable using needs context in the if condition to control the job execution
+        steps:
+            - name: deploy step
+              run: echo "deploying code....."   # deploy step will only run if the build job output variable build-status is success, otherwise this job will be skipped
