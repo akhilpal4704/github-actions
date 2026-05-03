@@ -5,9 +5,18 @@ on: workflow_dispatch
 jobs:
     build:
         runs-on: ubuntu-latest
+        defaults:
+            run:
+             working-directory: 04-using-actions/react-app
         steps:
             - name: Checkout code
               uses: actions/checkout@v4
-            - name: printing folder
-              run: ls
+            - name: setup node
+              uses: actions/setup-node@v3
+              with:
+                    node-version: '24.x'
+            - name: install dependencies
+              run: npm ci
+            - name: run tests
+              run: npm run test
            
