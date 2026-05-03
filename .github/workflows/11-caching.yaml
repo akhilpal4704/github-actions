@@ -7,14 +7,6 @@ on:
                 type: boolean
                 description: Whether to use caching or not'
                 default: true
-            node-version:
-                type: choice
-                description: 'Node.js version to use'
-                options:
-                    - '24.x'
-                    - '18.x'
-                    - '16.x'
-                default: '24.x'
 
 jobs:
     caching:
@@ -28,8 +20,16 @@ jobs:
             - name: setup node
               uses: actions/setup-node@v3
               with:
-                    node-version: ${{ inputs.node-version }}
+                    node-version: '24.x'
+            - name: Cache node modules
+              if: ${{ inputs.use-cache }}
+              uses: actions/cache@v3
+              id: cache
+              with:
+                path: 11-caching/react-app/node_modules
+                key: dependencies-${{ hashFiles('11-caching/react-app/package-lock.json') }}
             - name: install dependencies
+              if: steps.cache.outputs.cache-hit != 'true'
               run: npm ci
             - name: run tests
               run: npm run test
