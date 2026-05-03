@@ -1,0 +1,28 @@
+name: 06-expressions
+
+on:
+    push:
+    workflow_dispatch:
+        inputs:
+            debug:
+                type: boolean
+                default: false
+
+jobs:
+    expression-job:
+        runs-on: ubuntu-latest
+        steps:
+            - name: '[debug] printing github context'
+              if: ${{ inputs.debug == true }}
+              run: |
+                echo "GITHUB_EVENT_NAME:${{github.event_name}}"
+                echo "GITHUB_WORKFLOW: ${{github.workflow}}"
+                echo "GITHUB_REF: ${{github.ref}}"
+                echo "GITHUB_SHA: ${{github.sha}}"
+                echo "GITHUB_ACTOR: ${{github.actor}}"
+            - name: '[debug] when printing from main branch'
+              if: ${{ inputs.debug == true && github.ref == 'refs/heads/main' }}
+              run: echo "This is the main branch"
+            - name: greetings
+              run: echo "hello world"
+            
