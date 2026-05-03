@@ -6,7 +6,7 @@ jobs:
     function-job:
         runs-on: ubuntu-latest
         steps:
-            - name: failure step
+            - name: success step
               run: exit 0
             - name: I will not run if the previous step fails
               if: ${{success()}}
